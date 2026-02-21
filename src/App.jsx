@@ -1,7 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+// ABOUTME: Personal portfolio/resume single-page application for Hector Luis Alamo.
+// ABOUTME: React 19 SPA with emerald green palette, Lucide icons, scroll animations, and semantic HTML.
 
-const A = "#2E6DA4";
-const AG = "#4A9EE0";
+import { useState, useEffect, useRef } from "react";
+import {
+  Dumbbell, UtensilsCrossed, Globe, FileText, Newspaper,
+  Bot, Target, Rocket, GraduationCap, Github, Linkedin,
+  Building2, ChevronDown, ExternalLink,
+} from "lucide-react";
+
+const A = "#059669";
+const AG = "#34D399";
 const D = "#0A0F1A";
 const DC = "#111827";
 const DB = "#1E293B";
@@ -31,7 +39,7 @@ const projects = [
       "Implemented trilingual support (EN/ES/PT) with 3,919 translations across 3 extraction layers using Lingui v5",
       "1,913 passing tests across 125 suites with CI/CD via GitHub Actions and EAS Build",
     ],
-    icon: "💪", highlight: true,
+    icon: Dumbbell, highlight: true,
   },
   {
     title: "AI Recipe Recommender",
@@ -44,7 +52,7 @@ const projects = [
       "Multilingual semantic search using sentence-transformers + pgvector ANN indexing at p95 latency of 32ms",
       "Comprehensive evaluation framework with Precision@5, MRR, and latency benchmarks across all variants",
     ],
-    icon: "🍽️", highlight: true,
+    icon: UtensilsCrossed, highlight: true,
   },
   {
     title: "Latino RAG",
@@ -57,7 +65,7 @@ const projects = [
       "Chunking ablation framework testing 4 chunk/overlap variants for optimal R@1/R@5/latency trade-offs",
       "Freshness-aware retrieval with document versioning, language-filtered pgvector search, and Redis session memory",
     ],
-    icon: "🌎", highlight: true,
+    icon: Globe, highlight: true,
   },
   {
     title: "News Summarizer",
@@ -70,7 +78,7 @@ const projects = [
       "PostgreSQL caching (72h TTL) with per-request cost tracking and Prometheus observability",
       "Evaluation framework with ROUGE-L, BERTScore, and Macro-F1 on 50-article bilingual gold set",
     ],
-    icon: "📊",
+    icon: FileText,
   },
   {
     title: "Newsroom",
@@ -83,7 +91,7 @@ const projects = [
       "Constitution-driven development with formal authority hierarchy, PRD-gated implementation, and 11 ADRs",
       "More test LOC than source LOC. Strict no-network testing policy",
     ],
-    icon: "📰",
+    icon: Newspaper,
   },
   {
     title: "Awesome Claude Subagents",
@@ -95,7 +103,7 @@ const projects = [
       "Curated catalog of 126+ specialized AI coding agents with model-tier routing and granular tool permissions",
       "Agent format enabling independent context windows, domain-specific intelligence, and automated model selection",
     ],
-    icon: "🤖",
+    icon: Bot,
   },
   {
     title: "VisionFlow",
@@ -107,7 +115,7 @@ const projects = [
       "Mobile goal-setting app with Jotai atom persistence, Supabase passwordless auth, and PostHog analytics",
       "Enforced UX constraints (max 3 daily priorities, 1-3 weekly items) as code-level invariants",
     ],
-    icon: "🎯",
+    icon: Target,
   },
   {
     title: "Palamo Dev Studio",
@@ -119,13 +127,13 @@ const projects = [
       "Production trilingual marketing site: Lighthouse 98/100/100/100 with deferred JS, code splitting, dynamic OG images",
       "484 unit/integration tests (Vitest) + 32 E2E tests (Playwright). n8n chat integration saving ~960KB initial payload",
     ],
-    icon: "🚀",
+    icon: Rocket,
   },
 ];
 
 const experience = [
   {
-    title: "Co-Founder & Lead Developer", company: "Palamo Dev Studio", period: "2024 – Present",
+    title: "Co-Founder & Lead Developer", company: "Palamo Dev Studio", period: "2025 – Present",
     bullets: [
       "Co-founded studio shipping AI-enabled, design-led mobile apps and web products",
       "Architect systems integrating LLM APIs, bilingual RAG, recommendation engines, and health data platforms",
@@ -144,6 +152,7 @@ const experience = [
 ];
 
 const education = [
+  { title: "B.A. History", inst: "University of Illinois at Chicago", topics: "Research, Critical Analysis, Academic Writing" },
   { title: "CS50: Introduction to Computer Science", inst: "HarvardX (Certificate Earned)", topics: "Algorithms, Data Structures, Databases, SQL, Flask, Software Engineering" },
   { title: "CS50 AI: Artificial Intelligence with Python", inst: "HarvardX (Certificate Earned)", topics: "Minimax, Bayesian Networks, NLP, PageRank, Neural Networks, Attention Mechanisms" },
 ];
@@ -155,56 +164,118 @@ function useInView(th = 0.1) {
   return [ref, v];
 }
 
-function FadeIn({ children, delay = 0, style = {} }) {
+function FadeIn({ children, delay = 0, style = {}, from = "bottom" }) {
   const [ref, v] = useInView();
-  return <div ref={ref} style={{ opacity: v ? 1 : 0, transform: v ? "none" : "translateY(28px)", transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`, ...style }}>{children}</div>;
+  const transforms = { bottom: "translateY(28px)", left: "translateX(-20px)" };
+  return <div ref={ref} style={{ opacity: v ? 1 : 0, transform: v ? "none" : transforms[from], transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`, ...style }}>{children}</div>;
 }
 
-function Pill({ name }) {
+function WordFade({ text, style = {}, baseDelay = 0 }) {
+  const [ref, visible] = useInView(0.1);
+  const words = text.split(" ");
+  return (
+    <p ref={ref} style={style}>
+      {words.map((word, i) => (
+        <span key={i} style={{ opacity: visible ? 1 : 0, transition: `opacity 0.4s ease ${baseDelay + i * 0.08}s` }}>{word} </span>
+      ))}
+    </p>
+  );
+}
+
+function CountUp({ target, active, duration = 800 }) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!active || target === 0) return;
+    const start = performance.now();
+    let frame;
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(Math.round(eased * target));
+      if (p < 1) frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [active, target, duration]);
+  return val.toLocaleString();
+}
+
+function Pill({ name, visible = true, delay = 0 }) {
   const [h, setH] = useState(false);
   return <span onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} style={{
     display: "inline-block", padding: "5px 14px", margin: "3px", borderRadius: "999px", fontSize: "12px",
     fontFamily: "'JetBrains Mono', monospace", border: `1px solid ${h ? AG : DB}`, background: h ? `${A}22` : DC,
-    color: h ? AG : TM, cursor: "default", transition: "all 0.3s", transform: h ? "translateY(-1px)" : "none",
+    color: h ? AG : TM, cursor: "default", transition: "all 0.3s",
+    transform: h ? "translateY(-2px) scale(1.05)" : visible ? "none" : "translateY(8px)",
+    opacity: visible ? 1 : 0, boxShadow: h ? `0 4px 12px ${A}33` : "none",
+    transitionDelay: visible ? `${delay}s` : "0s",
   }}>{name}</span>;
 }
 
+function SkillCategory({ cat, items, delay }) {
+  const [ref, visible] = useInView(0.1);
+  return (
+    <div ref={ref} style={{ marginBottom: "22px", opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)", transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s` }}>
+      <h3 style={{ fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", color: T, fontWeight: 600, marginBottom: "8px", letterSpacing: "0.04em" }}>{cat}</h3>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>{items.map((s, i) => <Pill key={s} name={s} visible={visible} delay={i * 0.04} />)}</div>
+    </div>
+  );
+}
+
 function StatBadge({ text }) {
-  return <span style={{ display: "inline-block", padding: "3px 10px", margin: "2px", borderRadius: "6px", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", background: `${A}18`, color: AG, border: `1px solid ${A}33` }}>{text}</span>;
+  const [ref, visible] = useInView(0.5);
+  const match = text.match(/^([\d,]+)(.*)/);
+  const base = { display: "inline-block", padding: "3px 10px", margin: "2px", borderRadius: "6px", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", background: `${A}18`, color: AG, border: `1px solid ${A}33` };
+  if (match) {
+    const target = parseInt(match[1].replace(/,/g, ""), 10);
+    return <span ref={ref} style={{ ...base, fontVariantNumeric: "tabular-nums" }}><CountUp target={target} active={visible} />{match[2]}</span>;
+  }
+  return <span ref={ref} style={base}>{text}</span>;
 }
 
 function ProjectCard({ project, index }) {
   const [h, setH] = useState(false);
   const [ex, setEx] = useState(false);
+  const Icon = project.icon;
   return (
     <FadeIn delay={index * 0.08} style={{ flex: "1 1 300px", maxWidth: "100%" }}>
-      <div onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onClick={() => setEx(!ex)} style={{
-        background: DC, border: `1px solid ${h ? A : DB}`, borderRadius: "14px", padding: "24px", cursor: "pointer",
+      <div onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} style={{
+        background: DC, border: `1px solid ${h ? A : DB}`, borderRadius: "14px", padding: "24px",
         transition: "all 0.3s", transform: h ? "translateY(-3px)" : "none",
-        boxShadow: h ? `0 10px 36px ${A}20` : `0 2px 6px rgba(0,0,0,0.3)`,
-        borderLeft: project.highlight ? `3px solid ${AG}` : undefined, position: "relative", overflow: "hidden",
+        boxShadow: h ? `0 10px 36px ${A}20, 0 0 20px ${A}10, inset 0 1px 0 ${A}15` : `0 2px 6px rgba(0,0,0,0.3)`,
+        borderLeft: project.highlight ? `3px solid ${A}` : undefined, position: "relative", overflow: "hidden",
       }}>
-        <div style={{ position: "absolute", top: "-20px", right: "-10px", fontSize: "72px", opacity: 0.05, pointerEvents: "none" }}>{project.icon}</div>
-        <div style={{ fontSize: "24px", marginBottom: "6px" }}>{project.icon}</div>
+        <div style={{ position: "absolute", top: "-20px", right: "-10px", pointerEvents: "none" }}>
+          <Icon size={120} strokeWidth={0.5} style={{ color: AG, opacity: 0.04 }} />
+        </div>
+        <div style={{ marginBottom: "6px", transition: "transform 0.3s ease", transform: h ? "rotate(-12deg) scale(1.15)" : "none", display: "inline-block" }}>
+          <Icon size={28} strokeWidth={1.75} color={AG} />
+        </div>
         <h3 style={{ fontSize: "17px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: T, margin: "0 0 2px" }}>{project.title}</h3>
         <p style={{ fontSize: "12px", color: TM, margin: "0 0 6px", fontStyle: "italic" }}>{project.subtitle}</p>
-        <p style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: AG, margin: "0 0 10px" }}>{project.tech}</p>
+        <p style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: TD, margin: "0 0 10px" }}>{project.tech}</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "2px", marginBottom: "10px" }}>
           {project.stats.map((s, i) => <StatBadge key={i} text={s} />)}
         </div>
-        <div style={{ maxHeight: ex ? "600px" : "0", overflow: "hidden", transition: "max-height 0.5s ease" }}>
+        <div style={{ maxHeight: ex ? "600px" : "0", overflow: "hidden", transition: "max-height 0.5s ease, opacity 0.3s ease", opacity: ex ? 1 : 0 }}>
           {project.bullets.map((b, i) => (
             <div key={i} style={{ display: "flex", gap: "8px", marginBottom: "6px", alignItems: "flex-start" }}>
-              <span style={{ color: AG, marginTop: "2px", fontSize: "7px", flexShrink: 0 }}>●</span>
+              <span style={{ color: A, marginTop: "2px", fontSize: "7px", flexShrink: 0 }}>●</span>
               <span style={{ fontSize: "13px", color: TM, lineHeight: 1.5 }}>{b}</span>
             </div>
           ))}
           <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-            style={{ display: "inline-block", marginTop: "8px", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, textDecoration: "none", borderBottom: `1px solid ${A}44` }}>
-            View {project.url.includes("github") ? "GitHub" : "Live"} ↗
+            style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "8px", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, textDecoration: "none", borderBottom: `1px solid ${A}44` }}>
+            View {project.url.includes("github") ? "GitHub" : "Live"} <ExternalLink size={12} />
           </a>
         </div>
-        <div style={{ fontSize: "11px", color: TD, marginTop: "4px", fontStyle: "italic" }}>{ex ? "Click to collapse" : "Click to expand →"}</div>
+        <button onClick={() => setEx(!ex)} aria-expanded={ex} style={{
+          display: "flex", alignItems: "center", gap: "4px", background: "none", border: "none", padding: "4px 0", marginTop: "8px",
+          cursor: "pointer", fontSize: "11px", color: TD, fontStyle: "italic", fontFamily: "'JetBrains Mono', monospace",
+        }}>
+          {ex ? "Collapse" : "Expand"}
+          <ChevronDown size={14} style={{ transition: "transform 0.3s ease", transform: ex ? "rotate(180deg)" : "none" }} />
+        </button>
       </div>
     </FadeIn>
   );
@@ -215,24 +286,24 @@ function NavDot({ label, id, active }) {
   return (
     <a href={`#${id}`} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       onClick={e => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }}
+      aria-label={`Navigate to ${label}`} aria-current={active ? "true" : undefined}
       style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", padding: "5px 0", cursor: "pointer" }}>
-      <div style={{ width: active ? "12px" : "7px", height: active ? "12px" : "7px", borderRadius: "50%", background: active ? AG : (h ? A : TD), transition: "all 0.3s", boxShadow: active ? `0 0 10px ${AG}` : "none" }} />
+      <div style={{ width: active ? "12px" : "7px", height: active ? "12px" : "7px", borderRadius: "50%", background: active ? AG : (h ? A : TD), transition: "all 0.3s", boxShadow: active ? `0 0 10px ${AG}` : "none", animation: active ? "glowPulse 2s ease-in-out infinite" : "none" }} />
       <span style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", color: active ? AG : (h ? T : TD), opacity: h || active ? 1 : 0, transition: "all 0.3s", whiteSpace: "nowrap", textTransform: "uppercase", letterSpacing: "0.08em" }}>{label}</span>
     </a>
   );
 }
 
-function SL({ text }) { return <h2 style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "6px" }}>{text}</h2>; }
-function ST({ text }) { return <h3 style={{ fontSize: "clamp(26px, 5vw, 38px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 40px", color: T }}>{text}</h3>; }
+function SL({ text }) { return <p style={{ fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "6px" }}>{text}</p>; }
+function ST({ text }) { return <h2 style={{ fontSize: "clamp(26px, 5vw, 38px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 40px", color: T }}>{text}</h2>; }
+
+const secs = [{ id: "hero", label: "Top" }, { id: "skills", label: "Skills" }, { id: "projects", label: "Projects" }, { id: "experience", label: "Experience" }, { id: "education", label: "Education" }, { id: "contact", label: "Contact" }];
 
 export default function Resume() {
   const [active, setActive] = useState("hero");
-  const [sy, setSy] = useState(0);
-  const secs = [{ id: "hero", label: "Top" }, { id: "skills", label: "Skills" }, { id: "projects", label: "Projects" }, { id: "experience", label: "Experience" }, { id: "education", label: "Education" }, { id: "contact", label: "Contact" }];
 
   useEffect(() => {
     const h = () => {
-      setSy(window.scrollY);
       const os = secs.map(s => { const el = document.getElementById(s.id); return el ? { id: s.id, top: el.offsetTop - 200 } : null; }).filter(Boolean);
       const c = os.filter(o => window.scrollY >= o.top);
       if (c.length) setActive(c[c.length - 1].id);
@@ -243,124 +314,185 @@ export default function Resume() {
 
   return (
     <div style={{ background: D, color: T, minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      <a href="#main-content" className="skip-link">Skip to main content</a>
 
-      <nav style={{ position: "fixed", right: "20px", top: "50%", transform: "translateY(-50%)", zIndex: 100, display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
+      <nav aria-label="Section navigation" style={{ position: "fixed", right: "20px", top: "50%", transform: "translateY(-50%)", zIndex: 100, display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
         {secs.map(s => <NavDot key={s.id} label={s.label} id={s.id} active={active === s.id} />)}
       </nav>
 
-      {/* HERO */}
-      <section id="hero" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "40px 24px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", background: `radial-gradient(circle, ${A}12 0%, transparent 70%)`, top: "50%", left: "50%", transform: `translate(-50%, -50%) translate(${Math.sin(sy * 0.002) * 15}px, ${Math.cos(sy * 0.002) * 15}px)`, pointerEvents: "none" }} />
-        <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>Full Stack Engineer · AI/ML · Bilingual NLP</div></FadeIn>
-        <FadeIn delay={0.2}><h1 style={{ fontSize: "clamp(40px, 8vw, 76px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 12px", lineHeight: 1.05, letterSpacing: "-0.03em", background: `linear-gradient(135deg, ${T} 0%, ${AG} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Hector Luis<br />Alamo</h1></FadeIn>
-        <FadeIn delay={0.35}>
-          <p style={{ fontSize: "17px", color: TM, maxWidth: "580px", lineHeight: 1.7, margin: "0 0 8px" }}>Building production-grade AI applications with measured outcomes. 8 deployed projects. 1,913 tests on flagship app. Bilingual RAG, ML recommendation systems, and fine-tuned NLP pipelines.</p>
-          <p style={{ fontSize: "13px", color: TD, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 32px" }}>Harvard CS50x + CS50 AI · Co-founder, Palamo Dev Studio</p>
-        </FadeIn>
-        <FadeIn delay={0.5}>
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
-            {[{ l: "GitHub", u: "https://github.com/hectorluisalamo" }, { l: "LinkedIn", u: "https://linkedin.com/in/hector-luis-alamo" }, { l: "Studio", u: "https://www.palamostudio.com" }].map((x, i) => (
-              <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{ padding: "10px 22px", borderRadius: "999px", border: `1px solid ${A}`, color: AG, textDecoration: "none", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", transition: "all 0.3s", background: "transparent" }}
-                onMouseEnter={e => { e.currentTarget.style.background = `${A}22`; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "none"; }}>{x.l} ↗</a>
-            ))}
-          </div>
-        </FadeIn>
-        <div style={{ position: "absolute", bottom: "36px", left: "50%", transform: "translateX(-50%)", opacity: 0.35 }}>
-          <div style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", color: TD, letterSpacing: "0.15em", marginBottom: "6px", textAlign: "center" }}>SCROLL</div>
-          <div style={{ width: "1px", height: "28px", margin: "0 auto", background: `linear-gradient(to bottom, ${TD}, transparent)`, animation: "pulse 2s ease-in-out infinite" }} />
-        </div>
-      </section>
-
-      {/* SKILLS */}
-      <section id="skills" style={{ padding: "90px 24px", maxWidth: "900px", margin: "0 auto" }}>
-        <FadeIn><SL text="Technical Skills" /><ST text="What I Work With" /></FadeIn>
-        {Object.entries(skills).map(([cat, items], ci) => (
-          <FadeIn key={cat} delay={ci * 0.06}>
-            <div style={{ marginBottom: "22px" }}>
-              <h4 style={{ fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", color: T, fontWeight: 600, marginBottom: "8px", letterSpacing: "0.04em" }}>{cat}</h4>
-              <div style={{ display: "flex", flexWrap: "wrap" }}>{items.map(s => <Pill key={s} name={s} />)}</div>
-            </div>
+      <main id="main-content">
+        {/* HERO */}
+        <section id="hero" aria-label="Introduction" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "40px 24px", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", background: `radial-gradient(circle, ${A}12 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", animation: "float 8s ease-in-out infinite", pointerEvents: "none" }} />
+          <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>Full Stack Engineer · AI/ML · Bilingual NLP</div></FadeIn>
+          <FadeIn delay={0.2}><h1 style={{ fontSize: "clamp(40px, 8vw, 76px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 12px", lineHeight: 1.05, letterSpacing: "-0.03em", background: `linear-gradient(135deg, ${T} 0%, ${AG} 50%, ${T} 100%)`, backgroundSize: "200% 200%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientShift 6s ease infinite" , whiteSpace: "nowrap" }}>Hector Luis Alamo</h1></FadeIn>
+          <WordFade
+            text="Building production-grade AI applications with measured outcomes. 8 deployed projects. 1,913 tests on flagship app. Bilingual RAG, ML recommendation systems, and fine-tuned NLP pipelines."
+            style={{ fontSize: "17px", color: TM, maxWidth: "580px", lineHeight: 1.7, margin: "0 0 8px" }}
+            baseDelay={0.4}
+          />
+          <FadeIn delay={0.5}>
+            <p style={{ fontSize: "13px", color: TD, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 32px" }}>Harvard CS50x + CS50 AI · Co-founder, Palamo Dev Studio</p>
           </FadeIn>
-        ))}
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" style={{ padding: "90px 24px", maxWidth: "1060px", margin: "0 auto" }}>
-        <FadeIn><SL text="Selected Projects" /><ST text="What I've Built" /></FadeIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "16px" }}>
-          {projects.map((p, i) => <ProjectCard key={i} project={p} index={i} />)}
-        </div>
-      </section>
-
-      {/* EXPERIENCE */}
-      <section id="experience" style={{ padding: "90px 24px", maxWidth: "900px", margin: "0 auto" }}>
-        <FadeIn><SL text="Professional Experience" /><ST text="Where I've Worked" /></FadeIn>
-        {experience.map((exp, i) => (
-          <FadeIn key={i} delay={i * 0.12}>
-            <div style={{ position: "relative", paddingLeft: "24px", marginBottom: "40px", borderLeft: `2px solid ${i === 0 ? A : DB}` }}>
-              <div style={{ position: "absolute", left: "-6px", top: "4px", width: "10px", height: "10px", borderRadius: "50%", background: i === 0 ? AG : DB, border: `2px solid ${D}`, boxShadow: i === 0 ? `0 0 10px ${A}66` : "none" }} />
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "6px", marginBottom: "3px" }}>
-                <h4 style={{ fontSize: "17px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: T, margin: 0 }}>{exp.title}</h4>
-                <span style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: TD, fontStyle: "italic" }}>{exp.period}</span>
-              </div>
-              <p style={{ fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", color: AG, margin: "0 0 12px" }}>{exp.company}</p>
-              {exp.bullets.map((b, bi) => (
-                <div key={bi} style={{ display: "flex", gap: "8px", marginBottom: "6px", alignItems: "flex-start" }}>
-                  <span style={{ color: A, marginTop: "3px", fontSize: "7px", flexShrink: 0 }}>●</span>
-                  <span style={{ fontSize: "14px", color: TM, lineHeight: 1.55 }}>{b}</span>
-                </div>
+          <FadeIn delay={0.6}>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+              {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", icon: Github }, { l: "LinkedIn", u: "https://linkedin.com/in/hector-luis-alamo", icon: Linkedin }, { l: "Studio", u: "https://www.palamostudio.com", icon: Building2 }].map((x, i) => (
+                <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "10px 22px", borderRadius: "999px", border: `1px solid ${A}`, color: AG, textDecoration: "none", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", transition: "all 0.3s", background: "transparent" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${A}22`; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "none"; }}>
+                  <x.icon size={14} /> {x.l} <ExternalLink size={12} />
+                </a>
               ))}
             </div>
           </FadeIn>
-        ))}
-      </section>
+          <div style={{ position: "absolute", bottom: "36px", left: "50%", transform: "translateX(-50%)", opacity: 0.35, textAlign: "center" }}>
+            <div style={{ fontSize: "10px", fontFamily: "'JetBrains Mono', monospace", color: TD, letterSpacing: "0.15em", marginBottom: "6px" }}>SCROLL</div>
+            <ChevronDown size={20} color={TD} style={{ animation: "bounce 2s ease-in-out infinite" }} />
+          </div>
+        </section>
 
-      {/* EDUCATION */}
-      <section id="education" style={{ padding: "70px 24px", maxWidth: "900px", margin: "0 auto" }}>
-        <FadeIn><SL text="Education" /></FadeIn>
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "20px" }}>
-          {education.map((ed, i) => (
-            <FadeIn key={i} delay={i * 0.1}>
-              <div style={{ background: DC, border: `1px solid ${DB}`, borderRadius: "14px", padding: "22px", borderLeft: `3px solid ${AG}` }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
-                  <span style={{ fontSize: "18px" }}>🎓</span>
-                  <h4 style={{ fontSize: "16px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: T, margin: 0 }}>{ed.title}</h4>
+        {/* SKILLS */}
+        <section id="skills" aria-label="Technical Skills" style={{ padding: "90px 24px", maxWidth: "900px", margin: "0 auto" }}>
+          <FadeIn><SL text="Technical Skills" /><ST text="What I Work With" /></FadeIn>
+          {Object.entries(skills).map(([cat, items], ci) => (
+            <SkillCategory key={cat} cat={cat} items={items} delay={ci * 0.06} />
+          ))}
+        </section>
+
+        {/* PROJECTS */}
+        <section id="projects" aria-label="Selected Projects" style={{ padding: "90px 24px", maxWidth: "1060px", margin: "0 auto" }}>
+          <FadeIn><SL text="Selected Projects" /><ST text="What I've Built" /></FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "16px" }}>
+            {projects.map((p, i) => <ProjectCard key={i} project={p} index={i} />)}
+          </div>
+        </section>
+
+        {/* EXPERIENCE */}
+        <section id="experience" aria-label="Professional Experience" style={{ padding: "90px 24px", maxWidth: "900px", margin: "0 auto" }}>
+          <FadeIn><SL text="Professional Experience" /><ST text="Where I've Worked" /></FadeIn>
+          {experience.map((exp, i) => (
+            <FadeIn key={i} delay={i * 0.12} from="left">
+              <div style={{ position: "relative", paddingLeft: "24px", marginBottom: "40px", borderLeft: `2px solid ${i === 0 ? A : DB}` }}>
+                <div style={{ position: "absolute", left: "-6px", top: "4px", width: "10px", height: "10px", borderRadius: "50%", background: i === 0 ? AG : DB, border: `2px solid ${D}`, boxShadow: i === 0 ? `0 0 10px ${A}66` : "none", animation: i === 0 ? "glowPulse 2s ease-in-out infinite" : "none" }} />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "6px", marginBottom: "3px" }}>
+                  <h3 style={{ fontSize: "17px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: T, margin: 0 }}>{exp.title}</h3>
+                  <span style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: TD, fontStyle: "italic" }}>{exp.period}</span>
                 </div>
-                <p style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, margin: "0 0 8px" }}>{ed.inst}</p>
-                <p style={{ fontSize: "13px", color: TM, margin: 0, lineHeight: 1.5, fontStyle: "italic" }}>{ed.topics}</p>
+                <p style={{ fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", color: TM, margin: "0 0 12px" }}>{exp.company}</p>
+                {exp.bullets.map((b, bi) => (
+                  <div key={bi} style={{ display: "flex", gap: "8px", marginBottom: "6px", alignItems: "flex-start" }}>
+                    <span style={{ color: A, marginTop: "3px", fontSize: "7px", flexShrink: 0 }}>●</span>
+                    <span style={{ fontSize: "14px", color: TM, lineHeight: 1.55 }}>{b}</span>
+                  </div>
+                ))}
               </div>
             </FadeIn>
           ))}
-        </div>
-      </section>
+        </section>
 
-      {/* CONTACT */}
-      <section id="contact" style={{ padding: "90px 24px 110px", textAlign: "center", position: "relative" }}>
-        <div style={{ position: "absolute", width: "400px", height: "400px", borderRadius: "50%", background: `radial-gradient(circle, ${A}0C 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", pointerEvents: "none" }} />
-        <FadeIn>
-          <SL text="Let's Connect" />
-          <h3 style={{ fontSize: "clamp(26px, 5vw, 42px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 20px", color: T }}>Ready to Build Together?</h3>
-          <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to full-stack and AI engineering roles. Interested in agent systems, bilingual AI, recommendation engines, and production ML workflows.</p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-            {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", primary: true }, { l: "LinkedIn", u: "https://linkedin.com/in/hector-luis-alamo" }, { l: "Palamo Studio", u: "https://www.palamostudio.com" }].map((x, i) => (
-              <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{
-                padding: "12px 28px", borderRadius: "999px", background: x.primary ? A : "transparent",
-                border: `1px solid ${A}`, color: x.primary ? "#fff" : AG, textDecoration: "none", fontSize: "13px",
-                fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, transition: "all 0.3s",
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; if (x.primary) e.currentTarget.style.background = AG; else e.currentTarget.style.background = `${A}22`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "none"; if (x.primary) e.currentTarget.style.background = A; else e.currentTarget.style.background = "transparent"; }}>
-                {x.l} ↗
-              </a>
+        {/* EDUCATION */}
+        <section id="education" aria-label="Education" style={{ padding: "70px 24px", maxWidth: "900px", margin: "0 auto" }}>
+          <FadeIn><SL text="Education" /></FadeIn>
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "20px" }}>
+            {education.map((ed, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <div style={{ background: DC, border: `1px solid ${DB}`, borderRadius: "14px", padding: "22px", borderLeft: `3px solid ${A}` }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
+                    <GraduationCap size={20} color={A} />
+                    <h3 style={{ fontSize: "16px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: T, margin: 0 }}>{ed.title}</h3>
+                  </div>
+                  <p style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: TM, margin: "0 0 8px" }}>{ed.inst}</p>
+                  <p style={{ fontSize: "13px", color: TM, margin: 0, lineHeight: 1.5, fontStyle: "italic" }}>{ed.topics}</p>
+                </div>
+              </FadeIn>
             ))}
           </div>
-        </FadeIn>
-      </section>
+        </section>
 
-      <footer style={{ padding: "20px", textAlign: "center", borderTop: `1px solid ${DB}`, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: TD }}>Las Vegas, NV · Hector Luis Alamo · 2025</footer>
-      <style>{`* { box-sizing: border-box; margin: 0; padding: 0; } html { scroll-behavior: smooth; } @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } } ::selection { background: ${A}44; } @media (max-width: 768px) { nav { display: none !important; } }`}</style>
+        {/* CONTACT */}
+        <section id="contact" aria-label="Contact" style={{ padding: "90px 24px 110px", textAlign: "center", position: "relative" }}>
+          <div style={{ position: "absolute", width: "400px", height: "400px", borderRadius: "50%", background: `radial-gradient(circle, ${A}0C 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", animation: "float 9s ease-in-out infinite", pointerEvents: "none" }} />
+          <FadeIn>
+            <SL text="Let's Connect" />
+            <h2 style={{ fontSize: "clamp(26px, 5vw, 42px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 20px", color: T }}>Ready to Build Together?</h2>
+            <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to full-stack engineering, AI/ML, and editorial or communications roles. Interested in agent systems, bilingual AI, and content strategy.</p>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+              {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", primary: true, icon: Github }, { l: "LinkedIn", u: "https://linkedin.com/in/hector-luis-alamo", icon: Linkedin }, { l: "Palamo Studio", u: "https://www.palamostudio.com", icon: Building2 }].map((x, i) => (
+                <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{
+                  display: "inline-flex", alignItems: "center", gap: "6px", padding: "12px 28px", borderRadius: "999px",
+                  background: x.primary ? `linear-gradient(135deg, ${A}, ${AG})` : "transparent",
+                  border: `1px solid ${x.primary ? "transparent" : A}`, color: x.primary ? D : AG,
+                  textDecoration: "none", fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", fontWeight: 500, transition: "all 0.3s",
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; if (x.primary) e.currentTarget.style.boxShadow = `0 6px 20px ${A}44`; else e.currentTarget.style.background = `${A}22`; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; if (!x.primary) e.currentTarget.style.background = "transparent"; }}>
+                  <x.icon size={14} /> {x.l} <ExternalLink size={12} />
+                </a>
+              ))}
+            </div>
+          </FadeIn>
+        </section>
+      </main>
+
+      <footer style={{ padding: "20px", textAlign: "center", borderTop: `1px solid ${DB}`, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: TD }}>
+        <address style={{ fontStyle: "normal", display: "inline" }}>Las Vegas, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
+      </footer>
+
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        ::selection { background: ${A}44; }
+
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes float {
+          0%, 100% { transform: translate(-50%, -50%) translate(0px, 0px); }
+          33% { transform: translate(-50%, -50%) translate(12px, -8px); }
+          66% { transform: translate(-50%, -50%) translate(-8px, 12px); }
+        }
+        @keyframes glowPulse {
+          0%, 100% { box-shadow: 0 0 6px ${AG}66; }
+          50% { box-shadow: 0 0 14px ${AG}AA; }
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(6px); }
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+        @media (max-width: 768px) { nav { display: none !important; } }
+
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+
+        a:focus-visible, button:focus-visible {
+          outline: 2px solid ${AG};
+          outline-offset: 2px;
+        }
+
+        .skip-link {
+          position: absolute;
+          top: -100%;
+          left: 16px;
+          padding: 8px 16px;
+          background: ${A};
+          color: ${T};
+          border-radius: 0 0 8px 8px;
+          z-index: 200;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 12px;
+          text-decoration: none;
+          transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+      `}</style>
     </div>
   );
 }
