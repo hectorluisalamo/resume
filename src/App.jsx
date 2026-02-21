@@ -71,7 +71,7 @@ const projects = [
     title: "AI Recipe Recommender",
     subtitle: "Bilingual ML Recommendation System",
     tech: "FastAPI · PostgreSQL · pgvector · Docker",
-    url: "https://github.com/hectorluisalamo",
+    url: "https://github.com/hectorluisalamo/ai-recipe-recommender",
     stats: ["MRR: 1.00", "p95: 32ms", "4 models"],
     bullets: [
       "Deployed 4-model ranking system (popularity → keyword → TF-IDF → semantic embeddings) with evaluation on bilingual gold set",
@@ -129,8 +129,8 @@ const experience = [
 
 const education = [
   { title: "B.A. History", inst: "University of Illinois at Chicago", topics: "Research, Critical Analysis, Academic Writing" },
-  { title: "CS50: Data Science and Machine Learning", inst: "HarvardX (Certificate Earned)", topics: "Linear Regression, Logistic Regression, k-NN, Decision Trees, Random Forests, Data Wrangling, Pandas, scikit-learn, Model Evaluation" },
-  { title: "CS50 AI: Computer Science for Artificial Intelligence", inst: "HarvardX (Certificate Earned)", topics: "Algorithms, Data Structures, SQL, Web Development, Search, Knowledge Representation, Optimization, Neural Networks, NLP, Reinforcement Learning" },
+  { title: "edX: Data Science and Machine Learning", inst: "HarvardX (Certificate Earned)", topics: "Linear Regression, Logistic Regression, k-NN, Decision Trees, Random Forests, Data Wrangling, Pandas, scikit-learn, Model Evaluation" },
+  { title: "edX: Computer Science for Artificial Intelligence", inst: "HarvardX (Certificate Earned)", topics: "Algorithms, Data Structures, SQL, Web Development, Search, Knowledge Representation, Optimization, Neural Networks, NLP, Reinforcement Learning" },
 ];
 
 function useInView(th = 0.1) {
