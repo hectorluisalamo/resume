@@ -46,7 +46,7 @@ const projects = [
     subtitle: "Bilingual ML Recommendation System",
     tech: "FastAPI · PostgreSQL · pgvector · Docker",
     url: "https://github.com/hectorluisalamo",
-    stats: ["MRR: 1.00", "p95: 32ms", "4 models", "Live on Render"],
+    stats: ["MRR: 1.00", "p95: 32ms", "4 models"],
     bullets: [
       "Deployed 4-model ranking system (popularity → keyword → TF-IDF → semantic embeddings) with evaluation on bilingual gold set",
       "Multilingual semantic search using sentence-transformers + pgvector ANN indexing at p95 latency of 32ms",
@@ -59,7 +59,7 @@ const projects = [
     subtitle: "Bilingual RAG Chatbot",
     tech: "FastAPI · pgvector · OpenAI · Redis · Docker",
     url: "https://github.com/hectorluisalamo/bilingual-rag",
-    stats: ["R@1: 0.74", "R@5: 0.80", "Cross-encoder", "Live on Render"],
+    stats: ["R@1: 0.74", "R@5: 0.80", "Cross-encoder"],
     bullets: [
       "Smart routing: FAQ short-circuit → vector retrieval → cross-encoder reranking, achieving R@1 of 0.74 on 50-item gold set",
       "Chunking ablation framework testing 4 chunk/overlap variants for optimal R@1/R@5/latency trade-offs",
@@ -72,7 +72,7 @@ const projects = [
     subtitle: "NLP Article Analysis Pipeline",
     tech: "FastAPI · GPT · Fine-Tuned DistilBERT · PostgreSQL",
     url: "https://github.com/hectorluisalamo/summ-senter",
-    stats: ["ROUGE-L", "BERTScore", "Macro-F1", "Live on Render"],
+    stats: ["ROUGE-L", "BERTScore", "Macro-F1"],
     bullets: [
       "End-to-end NLP pipeline: extraction → language detection → translation (ES→EN) → summarization (GPT) → sentiment (fine-tuned DistilBERT)",
       "PostgreSQL caching (72h TTL) with per-request cost tracking and Prometheus observability",
