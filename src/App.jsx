@@ -42,19 +42,6 @@ const projects = [
     icon: Dumbbell, highlight: true,
   },
   {
-    title: "AI Recipe Recommender",
-    subtitle: "Bilingual ML Recommendation System",
-    tech: "FastAPI · PostgreSQL · pgvector · Docker",
-    url: "https://github.com/hectorluisalamo",
-    stats: ["MRR: 1.00", "p95: 32ms", "4 models"],
-    bullets: [
-      "Deployed 4-model ranking system (popularity → keyword → TF-IDF → semantic embeddings) with evaluation on bilingual gold set",
-      "Multilingual semantic search using sentence-transformers + pgvector ANN indexing at p95 latency of 32ms",
-      "Comprehensive evaluation framework with Precision@5, MRR, and latency benchmarks across all variants",
-    ],
-    icon: UtensilsCrossed, highlight: true,
-  },
-  {
     title: "Latino RAG",
     subtitle: "Bilingual RAG Chatbot",
     tech: "FastAPI · pgvector · OpenAI · Redis · Docker",
@@ -80,6 +67,19 @@ const projects = [
     ],
     icon: FileText,
   },
+    {
+    title: "AI Recipe Recommender",
+    subtitle: "Bilingual ML Recommendation System",
+    tech: "FastAPI · PostgreSQL · pgvector · Docker",
+    url: "https://github.com/hectorluisalamo",
+    stats: ["MRR: 1.00", "p95: 32ms", "4 models"],
+    bullets: [
+      "Deployed 4-model ranking system (popularity → keyword → TF-IDF → semantic embeddings) with evaluation on bilingual gold set",
+      "Multilingual semantic search using sentence-transformers + pgvector ANN indexing at p95 latency of 32ms",
+      "Comprehensive evaluation framework with Precision@5, MRR, and latency benchmarks across all variants",
+    ],
+    icon: UtensilsCrossed, highlight: true,
+  },
   {
     title: "Newsroom",
     subtitle: "Governed AI Publishing Pipeline",
@@ -92,30 +92,6 @@ const projects = [
       "More test LOC than source LOC. Strict no-network testing policy",
     ],
     icon: Newspaper,
-  },
-  {
-    title: "Awesome Claude Subagents",
-    subtitle: "Open-Source Agent Catalog",
-    tech: "YAML · Claude Code · 126+ Agents",
-    url: "https://github.com/hectorluisalamo",
-    stats: ["126+ agents", "10 categories", "Model routing", "Open source"],
-    bullets: [
-      "Curated catalog of 126+ specialized AI coding agents with model-tier routing and granular tool permissions",
-      "Agent format enabling independent context windows, domain-specific intelligence, and automated model selection",
-    ],
-    icon: Bot,
-  },
-  {
-    title: "VisionFlow",
-    subtitle: "Intentional Goal-Setting App",
-    tech: "React Native · Expo · Supabase · PostHog",
-    url: "https://github.com/hectorluisalamo",
-    stats: ["MVP complete", "Jotai state", "Magic link auth", "70% coverage"],
-    bullets: [
-      "Mobile goal-setting app with Jotai atom persistence, Supabase passwordless auth, and PostHog analytics",
-      "Enforced UX constraints (max 3 daily priorities, 1-3 weekly items) as code-level invariants",
-    ],
-    icon: Target,
   },
   {
     title: "Palamo Dev Studio",
@@ -153,8 +129,8 @@ const experience = [
 
 const education = [
   { title: "B.A. History", inst: "University of Illinois at Chicago", topics: "Research, Critical Analysis, Academic Writing" },
-  { title: "CS50: Introduction to Computer Science", inst: "HarvardX (Certificate Earned)", topics: "Algorithms, Data Structures, Databases, SQL, Flask, Software Engineering" },
-  { title: "CS50 AI: Artificial Intelligence with Python", inst: "HarvardX (Certificate Earned)", topics: "Minimax, Bayesian Networks, NLP, PageRank, Neural Networks, Attention Mechanisms" },
+  { title: "CS50: Data Science and Machine Learning", inst: "HarvardX (Certificate Earned)", topics: "Linear Regression, Logistic Regression, k-NN, Decision Trees, Random Forests, Data Wrangling, Pandas, scikit-learn, Model Evaluation" },
+  { title: "CS50 AI: Computer Science for Artificial Intelligence", inst: "HarvardX (Certificate Earned)", topics: "Algorithms, Data Structures, SQL, Web Development, Search, Knowledge Representation, Optimization, Neural Networks, NLP, Reinforcement Learning" },
 ];
 
 function useInView(th = 0.1) {
