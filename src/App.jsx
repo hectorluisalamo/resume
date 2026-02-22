@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Dumbbell, UtensilsCrossed, Globe, FileText, Newspaper,
-  Bot, Target, Rocket, GraduationCap, Github, Linkedin,
+  GraduationCap, Github, Linkedin,
   Building2, ChevronDown, ExternalLink,
 } from "lucide-react";
 
@@ -18,56 +18,72 @@ const TM = "#94A3B8";
 const TD = "#64748B";
 
 const skills = {
-  "Languages": ["TypeScript", "Python", "JavaScript", "SQL", "Dart", "HTML/CSS"],
-  "Frontend / Mobile": ["React Native", "Expo", "Next.js", "React", "Tailwind CSS", "Framer Motion", "Flutter", "Streamlit", "Jotai"],
-  "Backend / API": ["FastAPI", "Node.js", "Express", "Flask", "Pydantic", "SQLAlchemy"],
-  "AI / ML / NLP": ["OpenAI API", "Claude API", "sentence-transformers", "Hugging Face", "PyTorch", "scikit-learn", "pgvector", "RAG Pipelines", "TF-IDF", "DistilBERT", "Helsinki-NLP", "NLTK"],
-  "Data / Infra": ["PostgreSQL", "SQLite", "Firebase", "Redis", "Docker", "Supabase"],
-  "DevOps / Quality": ["GitHub Actions", "EAS Build", "Vercel", "Render", "Prometheus", "Sentry", "Jest", "Vitest", "Playwright", "Maestro", "pytest"],
+  "Backend": ["Python", "FastAPI", "Flask", "REST APIs", "SQLAlchemy", "PostgreSQL", "SQLite", "JWT Authentication"],
+  "Frontend / Mobile": ["React", "React Native", "Next.js", "TypeScript", "Tailwind CSS", "Expo"],
+  "AI Systems": ["OpenAI API", "Anthropic API", "RAG Pipelines", "Embeddings & Vector Search (pgvector)", "Tool/Function Calling", "Multi-Step Agent Workflows", "Prompt Evaluation & Guardrails"],
+  "ML / NLP": ["PyTorch", "scikit-learn", "sentence-transformers", "TF-IDF", "DistilBERT Fine-Tuning"],
+  "Infra & DevOps": ["Docker", "GitHub Actions", "Vercel", "Render", "Redis", "Supabase", "CI/CD", "Structured Logging", "Sentry"],
+  "Engineering": ["Unit Testing (pytest, Vitest, Jest)", "E2E Testing (Playwright)", "Structured Debugging", "AI-Assisted Development"],
 };
 
 const projects = [
   {
-    title: "ChicaFit",
-    subtitle: "Personalized Fitness App for Latinas",
-    tech: "React Native · Expo · TypeScript · Firebase",
-    url: "https://github.com/hectorluisalamo/chicafit-showcase",
-    stats: ["380 files", "71 screens", "1,913 tests", "App Store Submitted"],
-    bullets: [
-      "Architected offline-first mobile app with deterministic weekly plan generation, serving 400+ exercises and personalized meal plans",
-      "Built platform-adaptive health data pipeline integrating Apple HealthKit and Google HealthConnect with encrypted storage",
-      "Implemented trilingual support (EN/ES/PT) with 3,919 translations across 3 extraction layers using Lingui v5",
-      "1,913 passing tests across 125 suites with CI/CD via GitHub Actions and EAS Build",
-    ],
-    icon: Dumbbell, highlight: true,
-  },
-  {
     title: "Latino RAG",
-    subtitle: "Bilingual RAG Chatbot",
+    subtitle: "Bilingual AI Agent System",
     tech: "FastAPI · pgvector · OpenAI · Redis · Docker",
     url: "https://github.com/hectorluisalamo/bilingual-rag",
     stats: ["R@1: 0.74", "R@5: 0.80", "Cross-encoder"],
     bullets: [
-      "Smart routing: FAQ short-circuit → vector retrieval → cross-encoder reranking, achieving R@1 of 0.74 on 50-item gold set",
-      "Chunking ablation framework testing 4 chunk/overlap variants for optimal R@1/R@5/latency trade-offs",
-      "Freshness-aware retrieval with document versioning, language-filtered pgvector search, and Redis session memory",
+      "Built bilingual RAG agent with tool-calling router that selects among FAQ lookup, vector retrieval, and cross-encoder reranking paths based on query intent",
+      "Achieved Recall@1 of 0.74 and Recall@5 of 0.80 on a 50-item bilingual gold set using language-filtered pgvector search",
+      "Implemented chunking ablation framework testing 4 chunk/overlap configurations to optimize retrieval accuracy vs. latency",
+      "Designed freshness-aware document versioning pipeline so the agent always surfaces current organizational information",
+      "Added Redis-backed session memory and guardrails to maintain conversational context and prevent off-topic drift",
     ],
     icon: Globe, highlight: true,
   },
   {
+    title: "AI Newsroom",
+    subtitle: "Governed AI Publishing Pipeline",
+    tech: "Python · Anthropic API · scikit-learn",
+    url: "https://github.com/hectorluisalamo/newsroom",
+    stats: ["116+ tests", "11 ADRs", "8-phase pipeline", "TDD"],
+    bullets: [
+      "Deterministic 8-phase editorial pipeline separating algorithmic pitch generation (no LLM) from Anthropic API–powered drafting with human-in-the-loop gates",
+      "Constitution-driven development with formal authority hierarchy, PRD-gated implementation, and 11 architectural decision records",
+      "More test LOC than production code; strict no-network testing policy with 116+ tests across unit, integration, and contract layers",
+    ],
+    icon: Newspaper,
+  },
+  {
+    title: "ChicaFit",
+    subtitle: "AI-Enabled Mobile Application",
+    tech: "React Native · Expo · TypeScript · Firebase",
+    url: "https://github.com/hectorluisalamo/chicafit-showcase",
+    stats: ["380 files", "71 screens", "2,000+ tests", "App Store Submitted"],
+    bullets: [
+      "Architected offline-first React Native app with deterministic weekly plan generation across 400+ exercises and personalized meal plans",
+      "Built platform-adaptive health data pipeline integrating Apple HealthKit and Google HealthConnect with encrypted local storage",
+      "Implemented trilingual support (EN/ES/PT-BR) with 3,900+ translation entries across 3 extraction layers using Lingui v5",
+      "2,000+ passing tests across 125 suites with CI/CD via GitHub Actions and EAS Build",
+      "Submitted to App Store with full accessibility audit and TestFlight beta distribution",
+    ],
+    icon: Dumbbell, highlight: true,
+  },
+  {
     title: "News Summarizer",
-    subtitle: "NLP Article Analysis Pipeline",
-    tech: "FastAPI · GPT · Fine-Tuned DistilBERT · PostgreSQL",
+    subtitle: "NLP Pipeline",
+    tech: "FastAPI · GPT · DistilBERT · PostgreSQL",
     url: "https://github.com/hectorluisalamo/summ-senter",
     stats: ["ROUGE-L", "BERTScore", "Macro-F1"],
     bullets: [
-      "End-to-end NLP pipeline: extraction → language detection → translation (ES→EN) → summarization (GPT) → sentiment (fine-tuned DistilBERT)",
-      "PostgreSQL caching (72h TTL) with per-request cost tracking and Prometheus observability",
-      "Evaluation framework with ROUGE-L, BERTScore, and Macro-F1 on 50-article bilingual gold set",
+      "End-to-end NLP pipeline: extraction → language detection → translation (ES→EN) → GPT summarization → sentiment classification via fine-tuned DistilBERT",
+      "PostgreSQL caching with 72-hour TTL, per-request cost tracking, and structured logging for observability",
+      "Evaluation framework reporting ROUGE-L, BERTScore, and Macro-F1 on a 50-article bilingual gold set",
     ],
     icon: FileText,
   },
-    {
+  {
     title: "AI Recipe Recommender",
     subtitle: "Bilingual ML Recommendation System",
     tech: "FastAPI · PostgreSQL · pgvector · Docker",
@@ -80,49 +96,23 @@ const projects = [
     ],
     icon: UtensilsCrossed, highlight: true,
   },
-  {
-    title: "Newsroom",
-    subtitle: "Governed AI Publishing Pipeline",
-    tech: "Python · Claude API · scikit-learn · Pydantic",
-    url: "https://github.com/hectorluisalamo/newsroom",
-    stats: ["116+ tests", "11 ADRs", "8-phase pipeline", "TDD"],
-    bullets: [
-      "Deterministic 8-phase pipeline separating algorithmic pitch generation (no LLM) from LLM-powered drafting with editorial gates",
-      "Constitution-driven development with formal authority hierarchy, PRD-gated implementation, and 11 ADRs",
-      "More test LOC than source LOC. Strict no-network testing policy",
-    ],
-    icon: Newspaper,
-  },
-  {
-    title: "Palamo Dev Studio",
-    subtitle: "Production Studio Website",
-    tech: "Next.js 16 · TypeScript · Tailwind · Vercel",
-    url: "https://www.palamostudio.com",
-    stats: ["Lighthouse 98", "484 tests", "32 E2E", "Trilingual"],
-    bullets: [
-      "Production trilingual marketing site: Lighthouse 98/100/100/100 with deferred JS, code splitting, dynamic OG images",
-      "484 unit/integration tests (Vitest) + 32 E2E tests (Playwright). n8n chat integration saving ~960KB initial payload",
-    ],
-    icon: Rocket,
-  },
 ];
 
 const experience = [
   {
     title: "Co-Founder & Lead Developer", company: "Palamo Dev Studio", period: "2025 – Present",
     bullets: [
-      "Co-founded studio shipping AI-enabled, design-led mobile apps and web products",
-      "Architect systems integrating LLM APIs, bilingual RAG, recommendation engines, and health data platforms",
-      "Build mobile apps with 1,900+ tests, CI/CD via GitHub Actions, and App Store submissions",
-      "Use AI tools (ChatGPT, Copilot, Cursor, Claude Code) within structured coding standards",
+      "Ship production features using LLM APIs (OpenAI, Anthropic) with tool-calling, multi-step agent workflows, and RAG retrieval pipelines",
+      "Design clean backend architectures (FastAPI, PostgreSQL, Redis) with structured logging, JWT auth, and Docker-based deployments",
+      "Iterate on prompt design and evaluation to reduce hallucination, enforce output schemas, and improve retrieval accuracy",
+      "Use AI-assisted development tools (ChatGPT, Copilot, Claude Code) within structured coding standards and TDD workflows",
     ],
   },
   {
     title: "Writer, Editor & Digital Producer", company: "Various Media Organizations", period: "12+ Years",
     bullets: [
-      "Led editorial strategy and content production at independent Latino media companies",
-      "Managed cross-functional teams coordinating technical and creative workflows",
-      "Applied analytical thinking to complex product initiatives. Strong documentation skills",
+      "Led editorial strategy and cross-functional content production at independent Latino media companies, coordinating technical and creative workflows",
+      "Applied analytical thinking to complex product initiatives; strong documentation, stakeholder communication, and deadline management skills",
     ],
   },
 ];
@@ -300,10 +290,10 @@ export default function Resume() {
         {/* HERO */}
         <section id="hero" aria-label="Introduction" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "40px 24px", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", background: `radial-gradient(circle, ${A}12 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", animation: "float 8s ease-in-out infinite", pointerEvents: "none" }} />
-          <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>Full Stack Engineer · AI/ML · Bilingual NLP</div></FadeIn>
+          <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>AI-native Full Stack Engineer · RAG & Agent Workflows · Web & Mobile</div></FadeIn>
           <FadeIn delay={0.2}><h1 style={{ fontSize: "clamp(40px, 8vw, 76px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 12px", lineHeight: 1.05, letterSpacing: "-0.03em", background: `linear-gradient(135deg, ${T} 0%, ${AG} 50%, ${T} 100%)`, backgroundSize: "200% 200%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientShift 6s ease infinite" , whiteSpace: "nowrap" }}>Hector Luis Alamo</h1></FadeIn>
           <WordFade
-            text="Building production-grade AI applications with measured outcomes. 8 deployed projects. 1,913 tests on flagship app. Bilingual RAG, ML recommendation systems, and fine-tuned NLP pipelines."
+            text="AI-native Full Stack Engineer building production LLM-powered applications, RAG pipelines, and agent workflows across web and mobile. 2,000+ tests on flagship app. Bilingual AI systems, ML recommendation engines, and fine-tuned NLP pipelines."
             style={{ fontSize: "17px", color: TM, maxWidth: "580px", lineHeight: 1.7, margin: "0 0 8px" }}
             baseDelay={0.4}
           />
@@ -350,11 +340,10 @@ export default function Resume() {
             <FadeIn key={i} delay={i * 0.12} from="left">
               <div style={{ position: "relative", paddingLeft: "24px", marginBottom: "40px", borderLeft: `2px solid ${i === 0 ? A : DB}` }}>
                 <div style={{ position: "absolute", left: "-6px", top: "4px", width: "10px", height: "10px", borderRadius: "50%", background: i === 0 ? AG : DB, border: `2px solid ${D}`, boxShadow: i === 0 ? `0 0 10px ${A}66` : "none", animation: i === 0 ? "glowPulse 2s ease-in-out infinite" : "none" }} />
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "6px", marginBottom: "3px" }}>
-                  <h3 style={{ fontSize: "17px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: T, margin: 0 }}>{exp.title}</h3>
-                  <span style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: TD, fontStyle: "italic" }}>{exp.period}</span>
-                </div>
-                <p style={{ fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", color: TM, margin: "0 0 12px" }}>{exp.company}</p>
+                <h3 style={{ fontSize: "17px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: T, margin: "0 0 4px" }}>{exp.title}</h3>
+                <p style={{ fontSize: "13px", fontFamily: "'JetBrains Mono', monospace", color: TM, margin: "0 0 12px" }}>
+                  {exp.company}<span style={{ margin: "0 10px", color: TD }}>|</span><span style={{ color: TD, fontStyle: "italic" }}>{exp.period}</span>
+                </p>
                 {exp.bullets.map((b, bi) => (
                   <div key={bi} style={{ display: "flex", gap: "8px", marginBottom: "6px", alignItems: "flex-start" }}>
                     <span style={{ color: A, marginTop: "3px", fontSize: "7px", flexShrink: 0 }}>●</span>
@@ -411,7 +400,7 @@ export default function Resume() {
       </main>
 
       <footer style={{ padding: "20px", textAlign: "center", borderTop: `1px solid ${DB}`, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: TD }}>
-        <address style={{ fontStyle: "normal", display: "inline" }}>Las Vegas, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
+        <address style={{ fontStyle: "normal", display: "inline" }}>Henderson, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
       </footer>
 
       <style>{`
