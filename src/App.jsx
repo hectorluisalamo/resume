@@ -109,10 +109,10 @@ const experience = [
     ],
   },
   {
-    title: "Writer, Editor & Digital Producer", company: "Various Media Organizations", period: "12+ Years",
+    title: "Writer, Editor & Digital Producer", company: "Futuro Media · MANO · Gozamos", period: "12+ Years",
     bullets: [
       "Led editorial strategy and cross-functional content production at independent Latino media companies, coordinating technical and creative workflows",
-      "Applied analytical thinking to complex product initiatives; strong documentation, stakeholder communication, and deadline management skills",
+      "Managed cross-platform editorial calendars and production workflows, translating organization goals into published content under tight deadlines",
     ],
   },
 ];
@@ -292,6 +292,7 @@ export default function Resume() {
           <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", background: `radial-gradient(circle, ${A}12 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", animation: "float 8s ease-in-out infinite", pointerEvents: "none" }} />
           <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>AI-native Full Stack Engineer · RAG & Agent Workflows · Web & Mobile</div></FadeIn>
           <FadeIn delay={0.2}><h1 style={{ fontSize: "clamp(40px, 8vw, 76px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 12px", lineHeight: 1.05, letterSpacing: "-0.03em", background: `linear-gradient(135deg, ${T} 0%, ${AG} 50%, ${T} 100%)`, backgroundSize: "200% 200%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientShift 6s ease infinite" , whiteSpace: "nowrap" }}>Hector Luis Alamo</h1></FadeIn>
+          <FadeIn delay={0.25}><p style={{ fontSize: "15px", fontFamily: "'JetBrains Mono', monospace", color: TM, fontStyle: "italic", margin: "0 0 16px", letterSpacing: "0.01em" }}>Media editor turned AI engineer — 12+ years in media, building with LLMs since 2023</p></FadeIn>
           <WordFade
             text="AI-native Full Stack Engineer building production LLM-powered applications, RAG pipelines, and agent workflows across web and mobile. 2,000+ tests on flagship app. Bilingual AI systems, ML recommendation engines, and fine-tuned NLP pipelines."
             style={{ fontSize: "17px", color: TM, maxWidth: "580px", lineHeight: 1.7, margin: "0 0 8px" }}
@@ -379,8 +380,8 @@ export default function Resume() {
           <div style={{ position: "absolute", width: "400px", height: "400px", borderRadius: "50%", background: `radial-gradient(circle, ${A}0C 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", animation: "float 9s ease-in-out infinite", pointerEvents: "none" }} />
           <FadeIn>
             <SL text="Let's Connect" />
-            <h2 style={{ fontSize: "clamp(26px, 5vw, 42px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 20px", color: T }}>Ready to Build Together?</h2>
-            <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to full-stack engineering, AI/ML, and editorial or communications roles. Interested in agent systems, bilingual AI, and content strategy.</p>
+            <h2 style={{ fontSize: "clamp(26px, 5vw, 42px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 20px", color: T }}>Let's Talk</h2>
+            <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to AI/ML engineer, full-stack, and AI content strategist roles. Interested in agentic systems, bilingual AI, and applied NLP.</p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", primary: true, icon: Github }, { l: "LinkedIn", u: "https://www.linkedin.com/in/hector-luis-alamo-90432941/", icon: Linkedin }, { l: "Palamo Studio", u: "https://www.palamostudio.com", icon: Building2 }].map((x, i) => (
                 <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{
