@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import {
-  Dumbbell, UtensilsCrossed, Globe, FileText, Newspaper,
+  Dumbbell, UtensilsCrossed, Globe, FileText, LayoutTemplate,
   GraduationCap, Github, Linkedin,
   Building2, ChevronDown, ExternalLink, Rss,
 } from "lucide-react";
@@ -32,32 +32,17 @@ const skills = {
 
 const projects = [
   {
-    title: "Latino RAG",
-    subtitle: "Bilingual AI Agent System",
-    tech: "FastAPI · pgvector · OpenAI · Redis · Docker",
-    url: "https://github.com/hectorluisalamo/bilingual-rag",
-    stats: ["R@1: 0.74", "R@5: 0.80", "Cross-encoder"],
+    title: "Crash Log",
+    subtitle: "Bilingual AI News Publication",
+    tech: "Sanity · Anthropic API · Beehiiv · GitHub Actions",
+    url: "https://crashlog.ai",
+    stats: ["Bilingual EN/ES", "Multi-agent", "Daily cadence"],
     bullets: [
-      "Built bilingual RAG agent with tool-calling router that selects among FAQ lookup, vector retrieval, and cross-encoder reranking paths based on query intent",
-      "Achieved Recall@1 of 0.74 and Recall@5 of 0.80 on a 50-item bilingual gold set using language-filtered pgvector search",
-      "Implemented chunking ablation framework testing 4 chunk/overlap configurations to optimize retrieval accuracy vs. latency",
-      "Designed freshness-aware document versioning pipeline so the agent always surfaces current organizational information",
-      "Added Redis-backed session memory and guardrails to maintain conversational context and prevent off-topic drift",
+      "Multi-phase autonomous production pipeline — story discovery, editorial drafting, bilingual translation, and social packaging — orchestrated by AI agents with human-in-the-loop publishing",
+      "Bilingual (EN/ES) newsletter, Instagram carousels, and X threads generated from a single Sanity source of truth",
+      "Deterministic validation gates and a voice-calibration feedback loop keep AI drafts on-brand",
     ],
-    icon: Globe, highlight: true,
-  },
-  {
-    title: "AI Newsroom",
-    subtitle: "Governed AI Publishing Pipeline",
-    tech: "Python · Anthropic API · scikit-learn",
-    url: "https://github.com/hectorluisalamo/newsroom",
-    stats: ["116+ tests", "11 ADRs", "8-phase pipeline", "TDD"],
-    bullets: [
-      "Deterministic 8-phase editorial pipeline separating algorithmic pitch generation (no LLM) from Anthropic API–powered drafting with human-in-the-loop gates",
-      "Constitution-driven development with formal authority hierarchy, PRD-gated implementation, and 11 architectural decision records",
-      "More test LOC than production code; strict no-network testing policy with 116+ tests across unit, integration, and contract layers",
-    ],
-    icon: Newspaper,
+    icon: Rss, highlight: true,
   },
   {
     title: "ChicaFit",
@@ -75,17 +60,19 @@ const projects = [
     icon: Dumbbell, highlight: true,
   },
   {
-    title: "News Summarizer",
-    subtitle: "NLP Pipeline",
-    tech: "FastAPI · GPT · DistilBERT · PostgreSQL",
-    url: "https://github.com/hectorluisalamo/summ-senter",
-    stats: ["ROUGE-L", "BERTScore", "Macro-F1"],
+    title: "Latino RAG",
+    subtitle: "Bilingual AI Agent System",
+    tech: "FastAPI · pgvector · OpenAI · Redis · Docker",
+    url: "https://github.com/hectorluisalamo/bilingual-rag",
+    stats: ["R@1: 0.74", "R@5: 0.80", "Cross-encoder"],
     bullets: [
-      "End-to-end NLP pipeline: extraction → language detection → translation (ES→EN) → GPT summarization → sentiment classification via fine-tuned DistilBERT",
-      "PostgreSQL caching with 72-hour TTL, per-request cost tracking, and structured logging for observability",
-      "Evaluation framework reporting ROUGE-L, BERTScore, and Macro-F1 on a 50-article bilingual gold set",
+      "Built bilingual RAG agent with tool-calling router that selects among FAQ lookup, vector retrieval, and cross-encoder reranking paths based on query intent",
+      "Achieved Recall@1 of 0.74 and Recall@5 of 0.80 on a 50-item bilingual gold set using language-filtered pgvector search",
+      "Implemented chunking ablation framework testing 4 chunk/overlap configurations to optimize retrieval accuracy vs. latency",
+      "Designed freshness-aware document versioning pipeline so the agent always surfaces current organizational information",
+      "Added Redis-backed session memory and guardrails to maintain conversational context and prevent off-topic drift",
     ],
-    icon: FileText,
+    icon: Globe, highlight: true,
   },
   {
     title: "AI Recipe Recommender",
@@ -101,17 +88,29 @@ const projects = [
     icon: UtensilsCrossed, highlight: true,
   },
   {
-    title: "Crash Log",
-    subtitle: "Bilingual AI News Publication",
-    tech: "Sanity · Anthropic API · Beehiiv · GitHub Actions",
-    url: "https://crashlog.ai",
-    stats: ["Bilingual EN/ES", "Multi-agent", "Daily cadence"],
+    title: "News Summarizer",
+    subtitle: "NLP Pipeline",
+    tech: "FastAPI · GPT · DistilBERT · PostgreSQL",
+    url: "https://github.com/hectorluisalamo/summ-senter",
+    stats: ["ROUGE-L", "BERTScore", "Macro-F1"],
     bullets: [
-      "Multi-phase autonomous production pipeline — story discovery, editorial drafting, bilingual translation, and social packaging — orchestrated by AI agents with human-in-the-loop publishing",
-      "Bilingual (EN/ES) newsletter, Instagram carousels, and X threads generated from a single Sanity source of truth",
-      "Deterministic validation gates and a voice-calibration feedback loop keep AI drafts on-brand",
+      "End-to-end NLP pipeline: extraction → language detection → translation (ES→EN) → GPT summarization → sentiment classification via fine-tuned DistilBERT",
+      "PostgreSQL caching with 72-hour TTL, per-request cost tracking, and structured logging for observability",
+      "Evaluation framework reporting ROUGE-L, BERTScore, and Macro-F1 on a 50-article bilingual gold set",
     ],
-    icon: Rss,
+    icon: FileText,
+  },
+  {
+    title: "Web Design & Front-End",
+    subtitle: "Production Marketing Sites",
+    tech: "React · Next.js · Tailwind · Vite · Vercel",
+    stats: ["Responsive", "SEO-optimized", "CI/CD"],
+    bullets: [
+      "Designed and built responsive, SEO-optimized marketing and brand sites for studio and client businesses",
+      "Component-driven React/Next.js front-ends with accessibility, structured data, and fast Core Web Vitals",
+      "Automated preview deployments and CI/CD via Vercel and GitHub Actions",
+    ],
+    icon: LayoutTemplate,
   },
 ];
 
@@ -262,10 +261,12 @@ function ProjectCard({ project, index }) {
               <span style={{ fontSize: "13px", color: TM, lineHeight: 1.5 }}>{b}</span>
             </div>
           ))}
-          <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
-            style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "8px", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, textDecoration: "none", borderBottom: `1px solid ${A}44` }}>
-            View {project.url.includes("github") ? "GitHub" : "Live"} <ExternalLink size={12} />
-          </a>
+          {project.url && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+              style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "8px", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, textDecoration: "none", borderBottom: `1px solid ${A}44` }}>
+              View {project.url.includes("github") ? "GitHub" : "Live"} <ExternalLink size={12} />
+            </a>
+          )}
         </div>
         <button onClick={() => setEx(!ex)} aria-expanded={ex} style={{
           display: "flex", alignItems: "center", gap: "4px", background: "none", border: "none", padding: "4px 0", marginTop: "8px",
