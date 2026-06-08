@@ -5,8 +5,12 @@ import { useState, useEffect, useRef } from "react";
 import {
   Dumbbell, UtensilsCrossed, Globe, FileText, Newspaper,
   GraduationCap, Github, Linkedin,
-  Building2, ChevronDown, ExternalLink,
+  Building2, ChevronDown, ExternalLink, Rss,
 } from "lucide-react";
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && window.matchMedia &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const A = "#059669";
 const AG = "#34D399";
@@ -96,6 +100,19 @@ const projects = [
     ],
     icon: UtensilsCrossed, highlight: true,
   },
+  {
+    title: "Crash Log",
+    subtitle: "Bilingual AI News Publication",
+    tech: "Sanity · Anthropic API · Beehiiv · GitHub Actions",
+    url: "https://crashlog.ai",
+    stats: ["Bilingual EN/ES", "Multi-agent", "Daily cadence"],
+    bullets: [
+      "Multi-phase autonomous production pipeline — story discovery, editorial drafting, bilingual translation, and social packaging — orchestrated by AI agents with human-in-the-loop publishing",
+      "Bilingual (EN/ES) newsletter, Instagram carousels, and X threads generated from a single Sanity source of truth",
+      "Deterministic validation gates and a voice-calibration feedback loop keep AI drafts on-brand",
+    ],
+    icon: Rss,
+  },
 ];
 
 const experience = [
@@ -125,8 +142,8 @@ const education = [
 
 function useInView(th = 0.1) {
   const ref = useRef(null);
-  const [v, setV] = useState(false);
-  useEffect(() => { const el = ref.current; if (!el) return; const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: th }); o.observe(el); return () => o.disconnect(); }, [th]);
+  const [v, setV] = useState(() => prefersReducedMotion());
+  useEffect(() => { const el = ref.current; if (!el) return; if (prefersReducedMotion()) return; const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: th }); o.observe(el); return () => o.disconnect(); }, [th]);
   return [ref, v];
 }
 
@@ -152,6 +169,7 @@ function CountUp({ target, active, duration = 800 }) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     if (!active || target === 0) return;
+    if (prefersReducedMotion()) { const id = requestAnimationFrame(() => setVal(target)); return () => cancelAnimationFrame(id); }
     const start = performance.now();
     let frame;
     const step = (now) => {
@@ -269,12 +287,15 @@ export default function Resume() {
   const [active, setActive] = useState("hero");
 
   useEffect(() => {
-    const h = () => {
+    let ticking = false;
+    const compute = () => {
       const os = secs.map(s => { const el = document.getElementById(s.id); return el ? { id: s.id, top: el.offsetTop - 200 } : null; }).filter(Boolean);
       const c = os.filter(o => window.scrollY >= o.top);
       if (c.length) setActive(c[c.length - 1].id);
+      ticking = false;
     };
-    window.addEventListener("scroll", h);
+    const h = () => { if (!ticking) { ticking = true; requestAnimationFrame(compute); } };
+    window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
   }, []);
 
