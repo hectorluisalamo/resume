@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import {
-  Dumbbell, UtensilsCrossed, Globe, FileText, LayoutTemplate,
+  Dumbbell, UtensilsCrossed, Globe, FileText, MonitorSmartphone,
   GraduationCap, Github, Linkedin,
   Building2, ChevronDown, ExternalLink, Rss,
 } from "lucide-react";
@@ -110,7 +110,7 @@ const projects = [
       "Component-driven React/Next.js front-ends with accessibility, structured data, and fast Core Web Vitals",
       "Automated preview deployments and CI/CD via Vercel and GitHub Actions",
     ],
-    icon: LayoutTemplate,
+    icon: MonitorSmartphone,
   },
 ];
 
