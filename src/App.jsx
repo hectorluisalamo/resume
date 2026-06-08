@@ -143,7 +143,18 @@ const education = [
 function useInView(th = 0.1) {
   const ref = useRef(null);
   const [v, setV] = useState(() => prefersReducedMotion());
-  useEffect(() => { const el = ref.current; if (!el) return; if (prefersReducedMotion()) return; const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: th }); o.observe(el); return () => o.disconnect(); }, [th]);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const mq = (typeof window !== "undefined" && window.matchMedia)
+      ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    if (mq && mq.matches) return; // already reduced: initial state is true via the useState initializer
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: th });
+    o.observe(el);
+    // React to a live OS motion-preference change: show immediately, stop animating.
+    const onChange = (e) => { if (e.matches) setV(true); };
+    if (mq) mq.addEventListener("change", onChange);
+    return () => { o.disconnect(); if (mq) mq.removeEventListener("change", onChange); };
+  }, [th]);
   return [ref, v];
 }
 
@@ -169,6 +180,9 @@ function CountUp({ target, active, duration = 800 }) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     if (!active || target === 0) return;
+    // Defer via rAF (not a bare setVal) so the state set happens outside the synchronous
+    // effect body — satisfies the react-hooks/set-state-in-effect lint rule while still
+    // jumping straight to the final value under reduced-motion.
     if (prefersReducedMotion()) { const id = requestAnimationFrame(() => setVal(target)); return () => cancelAnimationFrame(id); }
     const start = performance.now();
     let frame;
