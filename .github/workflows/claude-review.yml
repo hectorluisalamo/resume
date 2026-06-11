@@ -3,7 +3,7 @@ name: Claude PR Review
 # Quality / correctness review on every PR, via Anthropic's first-party action.
 # Auth: CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`) — free under Claude Max.
 # Uses `pull_request` (NOT pull_request_target) — runs in the fork's restricted context.
-# claude-code-action pinned >= v1.0.94 (CVSS-9.4 fix). NOTE: this action only begins
+# claude-code-action SHA-pinned at v1.0.99 (>= v1.0.94 CVSS-9.4 fix). NOTE: this action only begins
 # reviewing once this file is merged to the default branch (anti-tampering validation).
 
 on:
@@ -19,10 +19,11 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5   # v4.3.1
         with:
           fetch-depth: 1
-      - uses: anthropics/claude-code-action@v1   # >= v1.0.94 (CVSS-9.4 fix)
+          persist-credentials: false
+      - uses: anthropics/claude-code-action@c3d45e8e941e1b2ad7b278c57482d9c5bf1f35b3   # v1.0.99 (>= v1.0.94 CVSS-9.4 fix)
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
