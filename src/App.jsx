@@ -116,7 +116,7 @@ const projects = [
 
 const experience = [
   {
-    title: "Co-Founder & Lead Developer", company: "Palamo Dev Studio", period: "2025 – Present",
+    title: "Co-Founder & Lead Developer", company: "Palamo Studio", period: "2025 – Present",
     bullets: [
       "Ship production features using LLM APIs (OpenAI, Anthropic) with tool-calling, multi-step agent workflows, and RAG retrieval pipelines",
       "Design clean backend architectures (FastAPI, PostgreSQL, Redis) with structured logging, JWT auth, and Docker-based deployments",
@@ -326,16 +326,16 @@ export default function Resume() {
         {/* HERO */}
         <section id="hero" aria-label="Introduction" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "40px 24px", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", width: "500px", height: "500px", borderRadius: "50%", background: `radial-gradient(circle, ${A}12 0%, transparent 70%)`, top: "50%", left: "50%", transform: "translate(-50%, -50%)", animation: "float 8s ease-in-out infinite", pointerEvents: "none" }} />
-          <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>AI-native Full Stack Engineer · RAG & Agent Workflows · Web & Mobile</div></FadeIn>
+          <FadeIn delay={0.1}><div style={{ fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", color: AG, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}>Forward Deployed AI Engineer · Governed Agentic Systems · Bilingual EN/ES</div></FadeIn>
           <FadeIn delay={0.2}><h1 style={{ fontSize: "clamp(40px, 8vw, 76px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 12px", lineHeight: 1.05, letterSpacing: "-0.03em", background: `linear-gradient(135deg, ${T} 0%, ${AG} 50%, ${T} 100%)`, backgroundSize: "200% 200%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientShift 6s ease infinite" }}>Hector Luis Alamo</h1></FadeIn>
           <FadeIn delay={0.25}><p style={{ fontSize: "15px", fontFamily: "'JetBrains Mono', monospace", color: TM, fontStyle: "italic", margin: "0 0 16px", letterSpacing: "0.01em" }}>Media editor turned AI engineer — 12+ years in media, building with LLMs since 2023</p></FadeIn>
           <WordFade
-            text="AI-native Full Stack Engineer building production LLM-powered applications, RAG pipelines, and agent workflows across web and mobile. 2,000+ tests on flagship app. Bilingual AI systems, ML recommendation engines, and fine-tuned NLP pipelines."
+            text="I build governed agentic systems — AI that runs autonomously but answers to someone — and I stay embedded with your team through production and past it. They work in English and Spanish, with memory, tool-calling, and human oversight at the gates."
             style={{ fontSize: "17px", color: TM, maxWidth: "580px", lineHeight: 1.7, margin: "0 0 8px" }}
             baseDelay={0.4}
           />
           <FadeIn delay={0.5}>
-            <p style={{ fontSize: "13px", color: TD, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 32px" }}>Harvard CS50x + CS50 AI · Co-founder, Palamo Dev Studio</p>
+            <p style={{ fontSize: "13px", color: TD, fontFamily: "'JetBrains Mono', monospace", margin: "0 0 32px" }}>Harvard CS50x + CS50 AI · Co-founder, Palamo Studio</p>
           </FadeIn>
           <FadeIn delay={0.6}>
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
@@ -417,7 +417,7 @@ export default function Resume() {
           <FadeIn>
             <SL text="Let's Connect" />
             <h2 style={{ fontSize: "clamp(26px, 5vw, 42px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 20px", color: T }}>Let's Talk</h2>
-            <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to AI/ML engineer, full-stack, and AI content strategist roles. Interested in agentic systems, bilingual AI, and applied NLP.</p>
+            <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to forward deployed AI engineering roles — full-time or through Palamo Studio. Interested in governed agentic systems, bilingual AI, and getting them into production.</p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", primary: true, icon: Github }, { l: "LinkedIn", u: "https://www.linkedin.com/in/hector-luis-alamo-90432941/", icon: Linkedin }, { l: "Palamo Studio", u: "https://www.palamostudio.com", icon: Building2 }].map((x, i) => (
                 <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{
@@ -437,7 +437,7 @@ export default function Resume() {
       </main>
 
       <footer style={{ padding: "20px", textAlign: "center", borderTop: `1px solid ${DB}`, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: TD }}>
-        <address style={{ fontStyle: "normal", display: "inline" }}>Las Vegas, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
+        <address style={{ fontStyle: "normal", display: "inline" }}>Henderson, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
       </footer>
 
       <style>{`

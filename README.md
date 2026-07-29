@@ -1,6 +1,6 @@
 # Resume
 
-Personal portfolio website for Hector Luis Alamo — full-stack engineer and AI/ML specialist.
+Personal portfolio website for Hector Luis Alamo — forward deployed AI engineer.
 
 Built with React 19 and Vite 7.
 
