@@ -437,7 +437,7 @@ export default function Resume() {
       </main>
 
       <footer style={{ padding: "20px", textAlign: "center", borderTop: `1px solid ${DB}`, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace", color: TD }}>
-        <address style={{ fontStyle: "normal", display: "inline" }}>Henderson, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
+        <address style={{ fontStyle: "normal", display: "inline" }}>Las Vegas, NV</address> · Hector Luis Alamo · {new Date().getFullYear()}
       </footer>
 
       <style>{`
