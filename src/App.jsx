@@ -339,7 +339,7 @@ export default function Resume() {
           </FadeIn>
           <FadeIn delay={0.6}>
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center" }}>
-              {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", icon: Github }, { l: "LinkedIn", u: "https://www.linkedin.com/in/hector-luis-alamo-90432941/", icon: Linkedin }, { l: "Studio", u: "https://www.palamostudio.com", icon: Building2 }].map((x, i) => (
+              {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", icon: Github }, { l: "LinkedIn", u: "https://www.linkedin.com/in/hector-luis-alamo-90432941/", icon: Linkedin }, { l: "Studio", u: "https://palamo.ai", icon: Building2 }].map((x, i) => (
                 <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "10px 22px", borderRadius: "999px", border: `1px solid ${A}`, color: AG, textDecoration: "none", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace", transition: "all 0.3s", background: "transparent" }}
                   onMouseEnter={e => { e.currentTarget.style.background = `${A}22`; e.currentTarget.style.transform = "translateY(-2px)"; }}
                   onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "none"; }}>
@@ -419,7 +419,7 @@ export default function Resume() {
             <h2 style={{ fontSize: "clamp(26px, 5vw, 42px)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, margin: "0 0 20px", color: T }}>Let's Talk</h2>
             <p style={{ fontSize: "15px", color: TM, maxWidth: "480px", margin: "0 auto 32px", lineHeight: 1.7 }}>Open to forward deployed AI engineering roles — full-time or through Palamo Studio. Interested in governed agentic systems, bilingual AI, and getting them into production.</p>
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-              {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", primary: true, icon: Github }, { l: "LinkedIn", u: "https://www.linkedin.com/in/hector-luis-alamo-90432941/", icon: Linkedin }, { l: "Palamo Studio", u: "https://www.palamostudio.com", icon: Building2 }].map((x, i) => (
+              {[{ l: "GitHub", u: "https://github.com/hectorluisalamo", primary: true, icon: Github }, { l: "LinkedIn", u: "https://www.linkedin.com/in/hector-luis-alamo-90432941/", icon: Linkedin }, { l: "Palamo Studio", u: "https://palamo.ai", icon: Building2 }].map((x, i) => (
                 <a key={i} href={x.u} target="_blank" rel="noopener noreferrer" style={{
                   display: "inline-flex", alignItems: "center", gap: "6px", padding: "12px 28px", borderRadius: "999px",
                   background: x.primary ? `linear-gradient(135deg, ${A}, ${AG})` : "transparent",
